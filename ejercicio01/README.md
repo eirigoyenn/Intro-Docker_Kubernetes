@@ -1,6 +1,4 @@
 # Comandos utilizados.
 	
-	docker build -t minombrenginx .
-	
-	docker run -p 80:80 -d minombrenginx
+	docker run -p 81:80 -v ${PWD}/stathtml:/usr/share/nginx/html:ro -d nginx
 	
