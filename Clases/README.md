@@ -1,4 +1,5 @@
  # NOTAS DE CLASE
+ # Primer Parte
  
  ##CLASE 1
  
@@ -114,7 +115,73 @@ BUILD vs. COMMIT :  El mas usado es el BUILD. El mejor es el COMMIT.Es mas gener
 	Exponer puertos, para que quien vaya a correr la imagen sepa en q puerto se corre.
 	
 	
-					
+## CLASE 3
+
+Al dockerizar cualquier cosa, lo que logro es buildear siempre igual. Entonces solo necesito definir una variable de entorno para diferenciar los diferentes ambientes.
+Siempre leer la documentacion, porque a a pesar que ande hay que hacer buenas practicas. Por ej una imagen de java la puedo usar, pero si no pongo java -jar esta mal conceptualmente.
+
+Ejercicio:
+	Levantar app y db. Al estar en contenedores separados, necesito juntarlos en la misma red para que se vean.
+	
+		'#!/bin/bash'
+
+		docker network create jv1
+
+		docker container run --name=db -e POSTGRES_PASSWORD=Passw0rd! --network=jv1 postgres:14.4-alpine
+
+		docker container run --name=web -e PORT=3000 -e RACK_ENV=production -e DATABASE_URL='postgres://postgres:Passw0rd!@db:5432/postgres' -p3000:3000 --network=jv1 nicopaez/jobvacancy-ruby:1.3.0
+				
+
+### DOCKER COMPOSE
+	
+	Para meter todos los comandos en un unico archivo.
+
+Obs: si ocupo espacio en el disco con volumenes de docker, necesito eliminarlos porque no se eliminan estos automaticamente si los tengo mapeados.
+		extension disk usage para ver los volumenes y el espacio que usa docker.
+	
+	docker-compose es otro cli distinto a docker.
+	docker esta en go, y docker-compose en python.
+	Hoy en la nueva version de docker tengo docker compose adentro de docker. es como una v2.
+		docker-compose es la vieja, docker compose ejecuta direcamente sobre docker ya q es la nueva. la vieja es un script de python q ejecuta cosas en docker.
+	docker compose tiene algunas sintaxis nuevas.
+	
+En produccion no suelo usar docker-compose, porque no hay tanto beneficio.
+
+Si quisiera puedo tener todo en un docker, hasta el runtime. Con solo tener la IDE me alcanza.
+
+OBS: -d era demonizada , para que el container no te tome la maquina.
+
+Ejemplo: 
+	api rest en ruby, con el framework padrino y postgre como db.
+	tiene dos DB.
+	Crea una webapp con un dockerfile.
+	la web app la fuerza a que se cree luego de las dos db.
+	
+	->docker-compose exec webapp /bin/bash  --con esto nos metemos a la aplicacion
+	->bundle install  -- es como un npm install, para instalar todo.
+	-> RACK_ENV=test bundle exec rake  -- para correr los tests.
+	-> ahora para conectar la app ejectuto ./start_app.h
+	->ahora tengo corriendo todo. ($PORT no anda en win, forzar el puerto q tiene la webapp en el docker compose)
+	
+Ejemplo testing:
+	--buscar link.
+
+
+El problema de Docker es que tengo un unico servidor. Ademas de que tengo que scriptear todo porque el servidor es remoto.
+La escalabilidad tambien esta limitada, porque si quiero aceptar mas trafico estoy limitado por el servidor.
+Con esto surgieron los orquestadores (elmas popular es Kubernetes). Lo que tengo es un conjunto de maquinas que tienen docker adentro. Yo le pido al orquestadores
+	que tiene que hacer y el orq resuleve estos problemas de Docker.
+	
+	
+# Segunda Parte
+
+	
+
+
+
+
+	
+	
 	
 	
  
