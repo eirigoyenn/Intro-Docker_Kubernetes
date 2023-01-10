@@ -1,9 +1,9 @@
  # NOTAS DE CLASE
  # Primer Parte
  
- ##CLASE 1
+ ## CLASE 1
  
- ##CLASE 2 
+ ## CLASE 2 
  -Con el -v path/local : path/docker lo que hago es mapear ambos directorios.
  -Cuando levanto un contenedor, este levanta una red por lo que tengo que hacer el mapeo de puertos.
  -Mayor beneficio de Docker -> Me permite empaquetar mi aplicacion dentro de una imagen. Puedo correr esa imagen luego en cualquier lugar. La aplicacion la empaqueto ahi.
@@ -174,6 +174,50 @@ Con esto surgieron los orquestadores (elmas popular es Kubernetes). Lo que tengo
 	
 	
 # Segunda Parte
+
+## CLASE 4
+
+Orquestadores. Nosotros tabajamos con Kubernetes.
+El orquestador me abstrae de la cantidad de nodos.
+
+### Docker Swarm
+
+La maquina nodo hace un swarm init, luego los nodos se unen haciendo un join con el id del manager.
+En el manager creo mi app con docker stack deploy.El orquestador decide en que nodo va a poner la app.
+
+### Kubernetes
+
+Es todo por linea de comandos. Kubectl.
+kubectl version --version server y client
+kubectl cluster-info
+kubectl run pingapp --image=nicopaez/pingapp:2.1.0 --> Correr un contenedor con esa imagen.
+kubectl get all --> leer todo lo creado con k8s
+
+no existen aplicaciones en kube, son PODS.
+
+kubectl port-forward pingapp 34567:4567 --> mapeo de puertos.es bloquenate a la consola.
+
+kubectl exec -it pingapp -- bash --> adentro del contenedor del pod.
+
+### Concepts
+
+Pods.
+
+Namespace:
+	kubectl create namespace balanz3
+	kubectl get namespaces
+	kubectl -n Balanz3 ... -> para hacer cosas sobre ese namespace
+		(o cambiar a default con kubectl config set-context --current --namespace=balanz3)
+	OBS: el comando config se configura con el archivo de /.kube/config .
+	OBS: si quiero puedo configurar la variable KUBECONFIG con el nuevo archivo de configuracion.
+
+
+
+
+
+
+
+
 
 	
 

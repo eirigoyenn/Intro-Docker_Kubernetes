@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pingapp
+  labels:
+    app: pingapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pingapp
+  template:
+    metadata:
+      labels:
+        app: pingapp
+    spec:
+      containers:
+      - name: pingapp
+        image: nicopaez/pingapp:3.0.0
+        ports:
+        - containerPort: 4567

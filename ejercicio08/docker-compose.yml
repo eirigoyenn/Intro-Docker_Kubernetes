@@ -1,0 +1,17 @@
+version: '2'
+services:
+  pa1:
+    image: nicopaez/password-api
+    ports:
+      - "8080:3000"
+  pa2:
+    image: nicopaez/password-api
+    ports:
+      - "8081:3000"
+  loadbalancer:
+    build: ./nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - pa1  
+      - pa2
